@@ -24,7 +24,3 @@ RUN mkdir -p /var/log/supervisor
 COPY conf/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 CMD ["/usr/bin/supervisord"]
-
-
-
-# ENTRYPOINT ["suricata","-c","/etc/suricata/suricata.yaml"]
