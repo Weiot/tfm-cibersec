@@ -1,0 +1,14 @@
+version: '3'
+services:
+  beat:
+    image: docker.elastic.co/beats/packetbeat:7.16.1
+    volumes:
+      - ./packetbeat.docker.yml:/usr/share/packetbeat/packetbeat.yml
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    # environment:
+    #   - cloud.id=UOC-SIEM-POC:ZXUtd2VzdC0zLmF3cy5lbGFzdGljLWNsb3VkLmNvbTo5MjQzJDdjZmZiMWZkZWZlNTRhYzU5M2RjOTkzM2NkY2Y0MzBhJDA5N2Q5ODkxNmFiNjQxZWVhMDU3NzdiZjdkMWI2ZGI2
+    #   - cloud.auth=elastic:oHj6oedxjnRr9YlGdrIc5UB4
+    network_mode: host
+    command: --strict.perms=false -e
