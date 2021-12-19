@@ -10,7 +10,7 @@ services:
     logging:
       driver: awslogs
       options:
-        awslogs-group: suricata
+        awslogs-group: siem1
         awslogs-region: eu-west-1
         awslogs-create-group: "true"
 
