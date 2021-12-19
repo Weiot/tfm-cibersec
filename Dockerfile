@@ -9,15 +9,16 @@ RUN apt-get update -y && \
 RUN apt-get install software-properties-common -y && \
     add-apt-repository ppa:oisf/suricata-stable && \
     apt-get update -y && \ 
-    apt-get install suricata suricata-dbg -y && \
-    suricata-update
+    apt-get install suricata suricata-dbg -y
 
 COPY conf/suricata/suricata.yaml /etc/suricata/suricata.yaml
 COPY conf/suricata/local.rules /var/lib/suricata/rules/local.rules
 COPY conf/suricata/threshold.config /etc/suricata/threshold.config
 COPY conf/suricata/disable.conf /etc/suricata/
 
-# Install supervisor
+RUN suricata-update
+
+# Install & configure supervisor
 RUN apt-get update && apt-get install -y supervisor
 RUN mkdir -p /var/log/supervisor
 
