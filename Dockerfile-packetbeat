@@ -1,0 +1,3 @@
+from docker.elastic.co/beats/packetbeat:7.16.2
+
+COPY conf/packetbeat/packetbeat.docker.yml ./packetbeat.yml
