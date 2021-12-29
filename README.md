@@ -8,5 +8,5 @@ docker build -f Dockerfile-custom-agent -t custom/siem:1.0 .
 ```
 2. Replace in envvar docker-compose and add awslogs driver setup
 ```bash
-docker run -e SURICATA_INTERFACE=<ETHERNET_INTERFACE> --network host -e --log-driver=awslogs --log-opt awslogs-region=eu-west-1 --log-opt awslogs-group=siem1 --log-opt awslogs-create-group="true" custom/siem:1.0
+docker run -d -e SURICATA_INTERFACE=<ETHERNET_INTERFACE> --network host --log-driver=awslogs --log-opt awslogs-region=eu-west-1 --log-opt awslogs-group=siem1 --log-opt awslogs-create-group=true custom/siem:1.0
 ```
