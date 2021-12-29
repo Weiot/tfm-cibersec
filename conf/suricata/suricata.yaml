@@ -42,7 +42,7 @@ outputs:
       enabled: yes
       filetype: regular
       filename: /dev/stdout
-      # filename: /var/log/suricata/eve.json
+      #filename: /var/log/suricata/eve.json
       pcap-file: false
       community-id: false
       community-id-seed: 0

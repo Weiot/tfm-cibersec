@@ -1,25 +1,41 @@
 from ubuntu:20.04
 
 # Install system tools
-
 RUN apt-get update -y && \
-    apt-get install net-tools iputils-ping tcpdump vim -y
+    apt-get install net-tools iputils-ping tcpdump vim wget -y
 
-# Install & configure suricata
+# Install supervisord
+RUN apt-get update && apt-get install -y supervisor
+RUN mkdir -p /var/log/supervisor
+
+# Install suricata
 RUN apt-get install software-properties-common -y && \
     add-apt-repository ppa:oisf/suricata-stable && \
     apt-get update -y && \ 
     apt-get install suricata suricata-dbg -y
 
+# Install cloudwatch-logs
+RUN wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb && \
+    dpkg -i amazon-cloudwatch-agent.deb && \
+    rm amazon-cloudwatch-agent.deb && \
+    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard && \
+    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl && \
+    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/config-downloader
+
+# Install rsyslog
+RUN apt-get install rsyslog -y
+
+# Configure supervisord
+COPY conf/supervisor/suricata.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Configure suricata
 COPY conf/suricata/suricata.yaml /etc/suricata/suricata.yaml
 COPY conf/suricata/local.rules /var/lib/suricata/rules/local.rules
 COPY conf/suricata/threshold.config /etc/suricata/threshold.config
 COPY conf/suricata/disable.conf /etc/suricata/
 
-# Install & configure supervisor
-RUN apt-get update && apt-get install -y supervisor
-RUN mkdir -p /var/log/supervisor
-
-COPY conf/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+# Configure rsyslog
+COPY conf/rsyslog/rsyslog.conf /etc/rsyslog.conf
+COPY conf/rsyslog/50-default.conf /etc/rsyslog.d/
 
 CMD ["/usr/bin/supervisord"]
