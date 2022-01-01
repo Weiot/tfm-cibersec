@@ -1,0 +1,4 @@
+FROM docker.elastic.co/beats/filebeat:7.16.2
+
+COPY conf/filebeat/filebeat.docker.yml ./filebeat.yml
+COPY conf/filebeat/suricata.yml ./modules.d/suricata.yml
