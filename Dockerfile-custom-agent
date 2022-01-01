@@ -14,14 +14,6 @@ RUN apt-get install software-properties-common -y && \
     apt-get update -y && \ 
     apt-get install suricata suricata-dbg -y
 
-# Install cloudwatch-logs
-RUN wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb && \
-    dpkg -i amazon-cloudwatch-agent.deb && \
-    rm amazon-cloudwatch-agent.deb && \
-    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-config-wizard && \
-    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl && \
-    rm -rf /opt/aws/amazon-cloudwatch-agent/bin/config-downloader
-
 # Install rsyslog
 RUN apt-get install rsyslog -y
 
